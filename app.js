@@ -3,20 +3,38 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { dbconnection } from "./database/dbconnection.js";
 import { ErrorMiddleware } from './error/error.js';
-import reservationRouter from './routes/reservationRoute.js'
-const app=express();
-dotenv.config({path:"./config/config.env"})
+import reservationRouter from './routes/reservationRoute.js';
+
+const app = express();
+dotenv.config({ path: "./config/config.env" });
+
+// ✅ Temporary open CORS fix — works for development
 app.use(cors({
-    origin:[process.env.FRONTEND_URL],
-    methods:["GET","POST"],
-    credentials:true,
-}))
-app.use(express.json())
+  origin: "https://resturant-web-app-frontend.vercel.app",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true,
+}));
+
+// ✅ Logs to confirm CORS applied
+app.use((req, res, next) => {
+  console.log("Request origin:", req.headers.origin);
+  next();
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ Routes
+app.use("/api/v1/reservation", reservationRouter);
+
+// ✅ Home test route
 app.get('/', (req, res) => {
   res.send('Backend is running successfully ✅');
 });
-app.use(express.urlencoded({extended:true}))
-app.use("/api/v1/reservation",reservationRouter)
+
+// ✅ DB and error
 dbconnection();
-app.use(ErrorMiddleware)
+app.use(ErrorMiddleware);
+
 export default app;
