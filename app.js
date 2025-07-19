@@ -37,4 +37,8 @@ app.get('/', (req, res) => {
 dbconnection();
 app.use(ErrorMiddleware);
 
+<<<<<<< HEAD
 export default app;
+=======
+export default app;
+>>>>>>> fef0de9 (Add email confirmation with nodemailer)
