@@ -33,7 +33,7 @@ export const sendReservation = async (req, res, next) => {
             subject: 'Zaika Confirmation - Zaika Restaurant',
             html: `
                 <p>Dear ${firstName} ${lastName},</p>
-                <p>Thank you for reserving a table at <strong>4Stack Restaurant</strong>!</p>
+                <p>Thank you for reserving a table at <strong>Zaika Restaurant</strong>!</p>
                 <p><strong>Reservation Details:</strong></p>
                 <ul>
                     <li>Date: ${date}</li>
